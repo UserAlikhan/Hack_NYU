@@ -1,55 +1,65 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
-const UserPage = () => {
+const UsersPage = () => {
   const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
+    console.log("Fetching data from API...");
+
     axios
       .get("http://api.nessieisreal.com/enterprise/customers?key=5fb1952b50e4b486b5d54763ee3f6506")
       .then((response) => {
-        setUsers(response.data);
-        setLoading(false);
+        console.log("API Response:", response.data);
+        
+        // Make sure we are correctly extracting users
+        if (response.data && response.data.results) {
+          setUsers(response.data.results);
+          console.log("Extracted Users:", response.data.results);
+        } else {
+          console.error("No results found in API response.");
+        }
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
-        setError("Failed to load user data.");
-        setLoading(false);
       });
   }, []);
 
-  if (loading) return <div className="text-center text-xl mt-5">Loading...</div>;
-  if (error) return <div className="text-center text-red-500 mt-5">{error}</div>;
-
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-4">
-      <h2 className="text-2xl font-semibold mb-4 text-center">Users List</h2>
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border border-gray-200 shadow-md rounded-lg">
-          <thead className="bg-gray-100">
+    <div>
+      <h1>Users Table</h1>
+      {users.length === 0 ? (
+        <p>No data available</p>
+      ) : (
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <thead>
             <tr>
-              <th className="px-4 py-2 border">ID</th>
-              <th className="px-4 py-2 border">Name</th>
-              <th className="px-4 py-2 border">Email</th>
-              <th className="px-4 py-2 border">Phone</th>
+              <th>ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Street</th>
+              <th>City</th>
+              <th>State</th>
+              <th>Zip Code</th>
             </tr>
           </thead>
           <tbody>
             {users.map((user) => (
-              <tr key={user.id} className="text-center border-b">
-                <td className="px-4 py-2 border">{user.id}</td>
-                <td className="px-4 py-2 border">{user.name}</td>
-                <td className="px-4 py-2 border">{user.email || "N/A"}</td>
-                <td className="px-4 py-2 border">{user.phone || "N/A"}</td>
+              <tr key={user._id}>
+                <td>{user._id}</td>
+                <td>{user.first_name}</td>
+                <td>{user.last_name}</td>
+                <td>{user.address.street_name}</td>
+                <td>{user.address.city}</td>
+                <td>{user.address.state}</td>
+                <td>{user.address.zip}</td>
               </tr>
             ))}
           </tbody>
         </table>
-      </div>
+      )}
     </div>
   );
 };
 
-export default UserPage;
+export default UsersPage;

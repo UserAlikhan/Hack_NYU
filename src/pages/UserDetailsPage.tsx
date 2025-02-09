@@ -53,7 +53,7 @@ const UserDetailsPage = () => {
             <Typography
                 variant="h4"
                 component="h1"
-                sx={{ my: 4, textAlign: 'center' }}
+                sx={{ my: 4, textAlign: 'center', marginTop: '64px' }}
             >
                 Acctount Details for {first_name} {last_name}
             </Typography>

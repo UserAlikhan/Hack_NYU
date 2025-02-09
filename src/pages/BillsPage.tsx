@@ -2,9 +2,8 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import useGetUserBills from "../hooks/useGetUserBills";
 import { useState } from "react";
 import { CircularProgress, TableCell, TableRow, TableHead, Table, TableContainer, Paper, Button, TableBody, TablePagination, Container, Typography, CardContent, Card, Box, CardActions, ListItemText, Collapse, List, ListItem, Divider } from "@mui/material";
-import { AccountType, BillType } from "../types/type";
+import { BillType } from "../types/type";
 import axios from "axios";
-import DecisionDetails from "../components/ui/DecisionDetails";
 
 const BillsPage = () => {
     const { accountId } = useParams();
@@ -79,7 +78,7 @@ const BillsPage = () => {
                 <Typography
                     variant="h4"
                     component="h1"
-                    sx={{ my: 4, textAlign: 'center' }}
+                    sx={{ my: 4, textAlign: 'center', marginTop: '64px' }}
                 >
                     Bills for {accountId}
                 </Typography>

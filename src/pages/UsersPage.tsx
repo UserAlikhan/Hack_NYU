@@ -56,7 +56,7 @@ const UsersPage = () => {
             <Typography
                 variant="h4"
                 component="h1"
-                sx={{ my: 4, textAlign: 'center' }}
+                sx={{ my: 4, textAlign: 'center', marginTop: '64px' }}
             >
                 Customers Dashboard
             </Typography>
